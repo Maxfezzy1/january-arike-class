@@ -6,16 +6,31 @@ using System.Threading.Tasks;
 
 namespace january_2024
 {
-    //access modifiers
-    //types of access modifiers
-    //public
-    //private
-    //internal
-    //protected
+   public enum DaysofTheWeek
+    {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
 
-    //nonstatic; a non-static class accomodates both a static and non static.
+    public enum Gender
+    {
+        Male,
+        Female,
+        Unknown,
+        Others
+
+    }
+
     public class Student : Circle // base class while the student class is called derived class
     {
+        public Gender Gender {  get; set; }
+
+
         int Id;
         String Name;
         int Age;
@@ -37,6 +52,7 @@ namespace january_2024
 
         public static void StudentInfo()
         {
+            Console.WriteLine(Gender.Male);
             Console.WriteLine("his name is ude from math class");
         }
     }
