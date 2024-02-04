@@ -20,9 +20,19 @@ internal class Program
 
         Student stud = new Student(101, "grace",22 , "chemistry");
         stud.StudentDetails();
-        
 
+        Student.Radius();//this student class was called but the methods in the circle class can be used because the student class inherited from the circle class
 
     }
+
+    public class user
+    {
+        public void MyMethod()
+        {
+
+
+        }
+    }
+
    
 }

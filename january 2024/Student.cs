@@ -14,7 +14,7 @@ namespace january_2024
     //protected
 
     //nonstatic; a non-static class accomodates both a static and non static.
-    public class Student
+    public class Student : Circle // base class while the student class is called derived class
     {
         int Id;
         String Name;
