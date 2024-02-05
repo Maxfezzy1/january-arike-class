@@ -6,15 +6,34 @@ using System.Threading.Tasks;
 
 namespace january_2024
 {
-   //generic means something that is not specific to a particular datatype in C# until u declare them urself
-   //generic <T> put this in front and it makes either the method or class generic
+    public delegate bool Ispromotable(Student student);//delegate
+
+    public  enum Gender
+    {
+        Male,
+        Female,
+        Unknown
+    }
+  
     public class Student
     {
-        public static void Ifenna<T>(T value1, T value2)
-        {
-            Console.WriteLine("value 1 = {0} and Value2 = {1}", value1, value2);
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Class {  get; set; }
+        public Gender Gender { get; set; }
 
+        public static void PromoteStudent(List<Student> students, Ispromotable isactive)
+        {
+            foreach (var student in students)
+            {
+                if (isactive(student))
+                {
+                    Console.WriteLine(student.Name + " " + "Promoted");
+                }
+            }
         }
-      
     }
+
+   
 }
