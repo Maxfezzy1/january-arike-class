@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 
 internal class Program
 {
@@ -21,39 +22,33 @@ internal class Program
         studentlist.Add(new Student() { Id = 010, Name = "Mary", Age = 45,Gender = Gender.Female, Class = "Jss1" });
         studentlist.Add(new Student() { Id = 011, Name = "chibuzor", Age = 50, Gender = Gender.Female, Class = "Jss 3" });
 
+        var result = studentlist.Select(em  => em.Name).ToList();
+        foreach (var student in result)
+        {
+            Console.WriteLine(student);
+        }
 
-        Ispromotable promoteresult = new Ispromotable(Promote);
-        Ispromotable promotedata = new Ispromotable(PromotewithAge);
-        Student.PromoteStudent(studentlist, PromotewithAge);
-        Console.WriteLine("the result is........");
-        Student.PromoteStudent(studentlist, Promote);
+        Console.WriteLine("SPACE........");
 
+        var data = studentlist.Sum(x => x.Age * x.Id);//Lambda experssion
+        Console.WriteLine(data);
+
+        // LambdaMethod();
 
     }
-    public static bool Promote(Student student)
+   
+    public static void LambdaMethod()
     {
-        if(student.Gender == Gender.Female)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
-    public static bool PromotewithAge(Student student)
-    {
-        if (student.Age >= 16)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+        List<int> numericalValues = new List<int>() { 34, 5, 6, 89, 90, 75, 7, 8, 9, 0, 8, 12, 14, 24};
+        var evenNumber = numericalValues.FindAll(x => (x%2)==0);
 
+        foreach (var x in evenNumber)
+        {
+            Console.WriteLine(x);
+        }
+        Console.Read();
+    }
 
 
 

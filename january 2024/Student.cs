@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace january_2024
 {
-    public delegate bool Ispromotable(Student student);//delegate
+  
 
     public  enum Gender
     {
@@ -23,16 +23,7 @@ namespace january_2024
         public string Class {  get; set; }
         public Gender Gender { get; set; }
 
-        public static void PromoteStudent(List<Student> students, Ispromotable isactive)
-        {
-            foreach (var student in students)
-            {
-                if (isactive(student))
-                {
-                    Console.WriteLine(student.Name + " " + "Promoted");
-                }
-            }
-        }
+      
     }
 
    
