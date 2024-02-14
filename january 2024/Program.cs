@@ -28,7 +28,8 @@ internal class Program
         {
             Console.WriteLine(student.Id + " " + student.Name + " " + student.Age);
         }
-       
+
+      
      
 
     }
