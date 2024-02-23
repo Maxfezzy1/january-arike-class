@@ -7,32 +7,75 @@ using System.Security.Cryptography.X509Certificates;
 internal class Program
 {
 
-    private static void Main(string[] args)//method
-    {
-        IList<Student> studentlist = new List<Student>();
+   private static void Main(string[] args)
+   {
+        //List
+        List <int> Numbers = new List <int> ();
+        Numbers.Add (17);
+        Numbers.Add(18);
+        Numbers.Add (19);
+        Numbers.Add(34);
+        Numbers.Add(65);
+
+        foreach (int i in Numbers)
         {
-            new Student() { Id = 1, Name = "Ifenna", Age = 23 };
-            new Student() { Id = 2, Name = "Ude", Age = 18 };
-            new Student() { Id = 3, Name = "Ben", Age = 15 };
-            new Student() { Id = 4, Name = "Kelvin", Age = 12 };
-            new Student() { Id = 5, Name = "Mary", Age = 20 };
-
-            
-
+            Console.WriteLine (  i   );
         }
 
-        var students = from s in studentlist
-                      select new Student() { Id = s.Id, Name = s.Name, Age = s.Age };
 
-        foreach (var student in students ) 
+        //Queue
+        Queue <string> words = new Queue <string> ();
+        words.Enqueue("chalk");
+        words.Enqueue("Board");
+        words.Enqueue("Purse");
+        words.Enqueue("Bag");
+        words.Enqueue("Chair");
+        words.Enqueue("Table");
+
+        Console.WriteLine("Total Elements : {0}", words.Count());//this simply counts the total elements
+
+        var Data = words.Dequeue ();//this prints and remove the first elements
+        Console.WriteLine (Data);
+
+        Console.WriteLine("Total Elements : {0}", words.Count());
+
+        if(words.Count() > 0)
         {
-            Console.WriteLine(student.Id + " " + student.Name + " " + student.Age);
+            Console.WriteLine (words.Peek ());//this prints and do not remove the first element
         }
+        Console.WriteLine("Total Elements : {0}", words.Count());
+
+        var data = words.Dequeue ();
+        Console.WriteLine (data);
+
+        Console.WriteLine("Total Elements : {0}", words.Count());
+
+
+
+        //Stacks
+        Stack<int> stacklist = new Stack<int> ();
+        stacklist.Push (1);
+        stacklist.Push (2);
+        stacklist.Push (3);
+        stacklist.Push (4);
+        stacklist.Push (5);
+        stacklist.Push (6);
+        stacklist.Push (7);
+
+        Console.WriteLine("Numbers of elements in stack :{0}", stacklist.Count());
+
+        while (stacklist.Count > 0)
+        {
+            Console.Write(stacklist.Pop() + " , ");
+        }
+        Console.WriteLine("Numbers of elements in stack :{0}", stacklist.Count());
+
+    } 
 
       
      
 
-    }
+    
 
 
 }
