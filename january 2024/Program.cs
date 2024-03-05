@@ -7,35 +7,23 @@ using System.Security.Cryptography.X509Certificates;
 internal class Program
 {
 
-   private static void Main(string[] args)
-   {
-        CarModule CarList1 = new CarModule() { CarId = 201, Name = "Honda", Price = 2000000, Model = 2002 };
-        CarModule CarList2 = new CarModule() { CarId = 202, Name = "Suv", Price = 2500000, Model = 2005 };
-        CarModule CarList3 = new CarModule() { CarId = 203, Name = "Camry", Price = 3200000, Model = 2012 };
-        CarModule CarList4 = new CarModule() { CarId = 204, Name = "Toyota", Price = 1000000, Model = 2045 };
-        CarModule CarList5 = new CarModule() { CarId = 205, Name = "Tesla", Price = 7420000, Model = 2022 };
-        CarModule CarList6 = new CarModule() { CarId = 206, Name = "Bugatti", Price = 1200000, Model = 2010 };
+    private static void Main(string[] args)
+    {
+        int[] numbs = new int[] { 2, 12, 5, 8, 10, 15, 21, 23, 34, 54, 67, 1 };
+        //query syntax
+        var res = from a in numbs where a > 3 orderby a select a;
+        foreach (int i in res)
+            Console.WriteLine(i);
 
-        Dictionary<int,CarModule> Cardictionary = new Dictionary<int,CarModule>();
-        Cardictionary.Add(1, CarList1 );
-        Cardictionary.Add(CarList2.CarId, CarList2);
-        Cardictionary.Add(CarList3.CarId, CarList3);
-        Cardictionary.Add(CarList4.CarId, CarList4);
-        Cardictionary.Add(CarList5.CarId, CarList5);
-        Cardictionary.Add(CarList6.CarId, CarList6);
 
-        foreach (var item in Cardictionary)
+        IList<CarModule> list = new List<CarModule>()
         {
-            Console.WriteLine("Key"+" "+ item.Key);
-           var car = item.Value;
-            Console.WriteLine("Name = {0}, Price = {1}, Model = {2}",car.Name,car.Price, car.Model);
-        }
-
-
-
-
-
-
+            new CarModule() { CarId = 101, Model = 2001, Name = "SUV", Price = 10000000 },
+            new CarModule() { CarId = 102, Model = 2002, Name = "Toyota", Price = 20000000 },
+            new CarModule() { CarId = 103, Model = 2003, Name = "Camary", Price = 30000000 },
+            new CarModule() { CarId = 104, Model = 2004, Name = "Tesla", Price = 40000000 },
+            new CarModule() { CarId = 105, Model = 2005, Name = "Bugatii", Price = 50000000 }
+        };
 
 
 
@@ -43,8 +31,4 @@ internal class Program
 
 
 
-
-
-
-
-}
+    
