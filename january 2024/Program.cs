@@ -1,4 +1,5 @@
-﻿using january_2024;
+﻿
+using january_2024;
 using Microsoft.VisualBasic;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -9,97 +10,124 @@ internal class Program
 
     private static void Main(string[] args)
     {
-
-        int[] Numerical1 = { 1, 2, 3, 4, 5,5,6,6,7,7 };
-        int[] Numerical2 = { 7,7,8,9,10,11,12,12,89};
-        int[] Numerical3 = { };
-        string[] words = { };
-
-        //quantifiers
-        var anyMethod = Numerical2.Any(x => x % 2 == 0);//checking if there is any even numbers
-        Console.WriteLine(anyMethod);
-
-        var allMethod = Numerical2.All(x => x % 2 == 0);//checkig if all of the value are evennumbers
-        Console.WriteLine(allMethod);
-
-        var containMethod = Numerical2.Contains(5);//checking is N2 has the value 5
-        Console.WriteLine(containMethod);
-
-
-
-
-        //aggregate operators
-        var result = Numerical1.ToList();
-        var counteven = result.Count(x => x % 2 == 0);
-        Console.WriteLine(counteven);
-
-        var sumValue = result.Sum();
-        Console.WriteLine(sumValue);
-
-        var maxValue = result.Max();
-        Console.WriteLine(maxValue);
-
-        var minValue = result.Min();
-        Console.WriteLine(minValue);
-
-        var averageValue = result.Average();
-        Console.WriteLine(averageValue);
-
-
-
-
-
-
-
-        var distinctMethod = Numerical1.Distinct();//this distinct method basically print all the duplicates as one
-        foreach (int i in distinctMethod)
+        var customer = new List<Customer>
         {
-            Console.WriteLine(i);
+            new Customer {Id= 101, customerName= "Pedro", phoneNumber="09037887890"},
+             new Customer {Id= 102, customerName= "Ifenna", phoneNumber="09037887111"},
+              new Customer {Id= 103, customerName= "Chido", phoneNumber="090378878945"}
+        };
+        var Orders = new List<Order>
+        {
+            new Order {CustomerId = 101, OrderId = 1, ProductName = "Bag of rice", Productprice= 80000},
+            new Order {CustomerId = 102, OrderId = 2, ProductName = "Bag of Beans", Productprice= 60000},
+            new Order {CustomerId = 102, OrderId = 3, ProductName = "Bag of Flour", Productprice= 76000},
+            new Order {CustomerId = 102, OrderId = 4, ProductName = "Bag of Spag", Productprice= 18000},
+            new Order { OrderId = 5, ProductName = "Bag of semo", Productprice= 12000}
+        };
+        //inner Join or Join
+        //method syntax
+        var joinList = customer.Join(Orders,
+                       x => x.Id, s => s.CustomerId,
+                       (x, s) => new
+                       {
+                           customerName = x.customerName,
+                           ItemName = s.ProductName,
+                           Amount = s.Productprice
+                       }).ToList();
+        foreach (var item in joinList)
+        {
+            Console.WriteLine($"CustomerName: {item.customerName}, ItemName: {item.ItemName}, Amount: {item.Amount}");
         }
 
-        var unionMethod = Numerical1.Union(Numerical2);
-
-        foreach (int v in unionMethod)
+        //query syntax
+        var queryjoinlist = (from c in customer
+                             join o in Orders
+                             on c.Id equals o.CustomerId
+                             select new
+                             {
+                                 customerName = c.customerName,
+                                 ItemName = o.ProductName,
+                                 Amount = o.Productprice
+                             }).ToList();
+        foreach (var data in queryjoinlist)
         {
-            Console.WriteLine("union :" + string.Join(",", v));
+            Console.WriteLine($"CustomerName: {data.customerName}, ItemName: {data.ItemName}, Amount: {data.Amount}");
+        }
 
+        //LeftJoin
+        //Query Syntax
+
+        var queryleftjoin = from c in customer
+                            join o in Orders
+                            on c.Id equals o.CustomerId
+                            into datagroup
+                            from groupinfo in datagroup.DefaultIfEmpty()
+                            select new
+                            {
+                                customerName = c.customerName,
+                                ItemName = groupinfo?.ProductName,
+                                Amount = groupinfo?.Productprice
+                            };
+        foreach (var data in queryleftjoin)
+        {
+            Console.WriteLine($"CustomerName: {data.customerName}, ItemName: {data.ItemName}, Amount: {data.Amount}");
+        }
+
+        //method syntax
+        var methodleftjoin = customer.GroupJoin(Orders,
+                              x => x.Id, s => s.CustomerId,
+                              (x, s) => new { x, s }
+                              ).SelectMany
+                              (
+                               x => x.s.DefaultIfEmpty(),
+                               (cust, ord) => new
+                               {
+                                   CustomerName = cust.x.customerName,
+                                   ItemName = ord == null ? "N/A" : ord.ProductName,
+                                   Amount = ord == null ? 0 : ord.Productprice,
+                               }).ToList();
+
+        foreach (var data in methodleftjoin)
+        {
+            Console.WriteLine($"CustomerName: {data.CustomerName}, ItemName: {data?.ItemName}, Amount : {data.Amount}");
+        }
+
+
+
+        //Right join
+
+        //query syntax
+
+        var queryrightjoin = from c in Orders
+                             join o in customer
+                             on c.CustomerId equals o.Id
+                             into datagroup
+                             from groupinfo in datagroup.DefaultIfEmpty()
+                             select new
+                             {
+                                 CustomerName = c.ProductName,
+                                 ItemName = groupinfo?.customerName,
+                                 Amount = c.Productprice
+                             };
+
+
+
+        foreach (var data in queryrightjoin)
+        {
+            Console.WriteLine($"CustomerName: {data.CustomerName}, ItemName: {data?.ItemName}, Amount : {data.Amount}");
 
         }
 
-        var intersectMethod = Numerical1.Intersect(Numerical2);//intersect method shows u what appear in both sequence
-
-        foreach (int v in intersectMethod)
-        {
-            Console.WriteLine("intersect :" + string.Join(",", v));
 
 
-        }
-
-        var expectMethod = Numerical1.Except(Numerical2);// expect method shows you what is in 1 but doesnt appear in 2
-
-        foreach (int v in expectMethod)
-        {
-            Console.WriteLine("expect :" + string.Join(",", v));
 
 
-        }
 
-        var concatMethod = Numerical1.Concat(Numerical2);//this concat methods prints everthing in the two data source
 
-        foreach (int v in concatMethod)
-        {
-            Console.WriteLine("Concat :" + string.Join(",", v));
-
-        }
 
 
 
     }
-
-
-
-
-
 
 }
 
